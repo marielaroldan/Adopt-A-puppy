@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Puppies List</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="layout/template.xhtml">
+            <ui:define name="content">
+                <h:form id="currentPuppyForm">
+                    <p:growl id="currentUserFormMessages"/>
+                    <p:dataGrid var="p" value="#{puppiescontroller.allPuppies}" columns="3"
+                                rows="12" id="puppies"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,16">
+                        <p:panel header="#{p.puppyname}">
+                            <h:panelGrid columns="2" styleClass="ui-noborder">
+                                <p:graphicImage library="image" name="#{p.picture}" width="150" height="100" />
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel for="breed" value="Breed:"/>
+                                    <h:outputText id ="breed" value="#{p.breed}"/>
+
+                                    <p:outputLabel for ="gender" value="Gender:"/>
+                                    <h:outputText id="gender" value="#{p.gender}"/>
+
+                                    <p:outputLabel for ="size" value="Size:"/>
+                                    <h:outputText id ="size" value="#{p.size}"/>
+
+                                    <p:outputLabel for="dateofbirth" value="Date of birth:"/>
+                                    <h:outputText id="dateofbirth" value="#{p.dateofbirth}">
+                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                    </h:outputText>
+
+                            </h:panelGrid>
+                                <p:commandLink oncomplete="PF('puppyEditDialog').show()" id="edit" value="Edit"
+                                               update=":currentPuppyForm:puppyDetail" title="Edit" process="@this">
+                                    <f:setPropertyActionListener value="#{p}" target="#{puppiescontroller.editPuppy}"/>
+                                </p:commandLink>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                    <p:dialog widgetVar="puppyEditDialog">
+                        <h:panelGrid  id ="puppyDetail" columns="2" style="margin-bottom:20px" cellpadding="5">
+                            <p:outputLabel value="Puppy's Id"/>
+                            <p:outputLabel value="#{puppiescontroller.editPuppy.id}"/>
+                            <p:outputLabel value="Puppy's name"/>
+                            <p:inputText class="form-control" id="exampleInputName" value="#{puppiescontroller.editPuppy.puppyname}"/>
+
+                            <p:outputLabel value="Picture"/>
+                            <p:inputText class="form-control" id="exampleInputPicture" value="#{puppiescontroller.editPuppy.picture}"/>
+
+                            <p:outputLabel value="Breed"/>
+                            <p:inputText class="form-control" id="exampleInputBreed" value="#{puppiescontroller.editPuppy.breed}"/>
+
+                            <p:outputLabel value="Date of Birth"/>
+                            <p:calendar id="effect" value="#{puppiescontroller.editPuppy.dateofbirth}" effect="fold" />
+
+                            <p:outputLabel value="Gender"/>
+                            <p:selectOneMenu id="gender" value="#{puppiescontroller.editPuppy.gender}" required="true">
+                                <f:selectItem itemLabel="Male" itemValue="male"/>
+                                <f:selectItem itemLabel="Female" itemValue="female"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel value="Size"/>
+                            <p:selectOneMenu id="size" value="#{puppiescontroller.editPuppy.size}" required="true">
+                                <f:selectItem itemLabel="XS" itemValue="XS"/>
+                                <f:selectItem itemLabel="S" itemValue="S"/>
+                                <f:selectItem itemLabel="M" itemValue="M"/>
+                                <f:selectItem itemLabel="L" itemValue="L"/>
+                                <f:selectItem itemLabel="XL" itemValue="XL"/>
+                            </p:selectOneMenu>
+
+                            <h:commandButton value="Edit" action="#{puppiescontroller.update()}"></h:commandButton>
+                        </h:panelGrid>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

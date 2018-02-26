@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title></title>
+    </h:head>
+    <h:body>
+        <h3>Puppies</h3>
+        <ui:composition template="/layout/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <p:dataGrid var="p" value="#{deletecontroller.allPuppies}" columns="3" 
+                                rows="12" id="puppies"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,16">
+                        <p:panel header="#{p.puppyname}">
+                            <h:panelGrid columns="2" styleClass="ui-noborder">
+                                <p:graphicImage library="image" name="#{p.picture}" width="150" height="100" />
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel for="breed" value="Breed:"/>
+                                    <h:outputText id ="breed" value="#{p.breed}"/>
+
+                                    <p:outputLabel for ="gender" value="Gender:"/>
+                                    <h:outputText id="gender" value="#{p.gender}"/>
+
+                                    <p:outputLabel for ="size" value="Size:"/>
+                                    <h:outputText id ="size" value="#{p.size}"/>
+
+                                    <p:outputLabel for="dateofbirth" value="Date of birth:"/>
+                                    <h:outputText id="dateofbirth" value="#{p.dateofbirth}">
+                                        <f:convertDateTime pattern="yyyy-MM-dd"/>
+                                    </h:outputText>
+                                </h:panelGrid>
+                                
+                                <p:commandButton id="delete" value="Delete" action="#{deletecontroller.delete()}"> 
+                                    <f:setPropertyActionListener value="#{p}" target="#{deletecontroller.removePuppy}"/>
+                                </p:commandButton>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+
+                    <h:commandButton action="#{deletecontroller.delete()}" value="Delete"></h:commandButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
