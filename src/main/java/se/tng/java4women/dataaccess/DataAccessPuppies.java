@@ -5,7 +5,7 @@ import se.tng.java4women.domain.Puppy;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Stateless
@@ -15,13 +15,12 @@ public class DataAccessPuppies {
     private EntityManager em;
 
     public List<Puppy> showAllpuppies() {
-        Query q = em.createNativeQuery("select * from puppy");
-        return q.getResultList();
+        TypedQuery<Puppy> tq = em.createQuery("select p from Puppy p",Puppy.class);
+        return tq.getResultList();
     }
 
     public Puppy getPuppyById(long id) {
         Puppy p = em.find(Puppy.class, id);
-
         return p;
     }
 

@@ -97,8 +97,7 @@ public class RegistrationController {
         Puppy puppy = new Puppy(puppyname, breed, gender, dateofbirth, size, picture);
         System.out.println(puppyname);
         dao.addPuppy(puppy);
-        return "puppiesconfirmation";
-        
+        return "puppiesList";
     }   
     
 }

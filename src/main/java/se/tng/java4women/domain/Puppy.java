@@ -3,15 +3,9 @@ package se.tng.java4women.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.Size;
-
 
 @Entity
 public class Puppy implements Serializable {
@@ -29,7 +23,7 @@ public class Puppy implements Serializable {
     
     @Size(max = 45)
     private String gender;
-    private Date dateofbirth; 
+    private Date dateofbirth;
     private String size; 
     
     @Size(min=5,max=50,message = "Picture must be a valid path")
@@ -43,7 +37,6 @@ public class Puppy implements Serializable {
         this.size = size;
         this.picture = picture;
     }  
-
 
     public Puppy() {
     }

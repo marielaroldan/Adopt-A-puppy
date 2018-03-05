@@ -30,9 +30,9 @@ public class PuppiesController implements Serializable {
     private Date dateofbirth;
     private String size;
     private String picture;
-    private Puppy editPuppy = new Puppy("mariela", "san bernardo", "Female", new Date(2017,11,10), "m", "mariela.jpg");
+    private Puppy editPuppy = new Puppy();
     private Puppy puppy = new Puppy();
-    private List<Puppy> allPuppies = new ArrayList<>();
+    private List<?> allPuppies = new ArrayList<>();
 
     public Puppy getEditPuppy() {
         return editPuppy;
@@ -44,14 +44,11 @@ public class PuppiesController implements Serializable {
 
     @PostConstruct
     public void init() {
-        System.out.println("init");
         allPuppies = dao.showAllpuppies();
-        //aqui estaba un foreach para listar todos los puppies
     }
 
     public PuppiesController() {
         puppy = new Puppy();
-        System.out.println("PC creado");
     }
 
     public DataAccessPuppies getDao() {
@@ -99,7 +96,6 @@ public class PuppiesController implements Serializable {
     }
 
     public void setPuppy(Puppy puppy) {
-        System.out.println(puppy);
         this.puppy = puppy;
     }
 
@@ -123,7 +119,7 @@ public class PuppiesController implements Serializable {
         this.picture = picture;
     }
 
-    public List<Puppy> getAllPuppies() {
+    public List<?> getAllPuppies() {
         return allPuppies;
     }
 
@@ -152,8 +148,6 @@ public class PuppiesController implements Serializable {
 
     public String update() {
         
-       System.out.println(editPuppy);
-       
        puppy = findById2();
        
        puppy.setPuppyname(editPuppy.getPuppyname());

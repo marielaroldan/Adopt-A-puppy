@@ -114,8 +114,6 @@ public class DeleteController {
     }
     
     public String delete() {
-        System.out.println("");
-        System.out.println(removePuppy);
         dao.delete(removePuppy);
         return "puppiesList";
     }
